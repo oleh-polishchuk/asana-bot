@@ -1,5 +1,7 @@
-const Endpoints = require('../constants/Endpoints');
 const axios = require('axios');
+const Logger = require("./LogService");
+const Endpoints = require('../constants/Endpoints');
+
 const instance = axios.create({
     baseURL: Endpoints.GITHUB.BASE_URL,
     headers: {
@@ -11,7 +13,10 @@ const instance = axios.create({
 instance.defaults.headers.patch[ 'Content-Type' ] = 'application/json';
 
 module.exports.closePR = (ownerName, repoName, pullRequestNumber) => {
-    return instance.patch(`/repos/${ownerName}/${repoName}/pulls/${pullRequestNumber}`, {
+    Logger.log(`Closing pull-request number ${pullRequestNumber} for repo ${repoName} owned by ${ownerName}`);
+    instance.patch(`/repos/${ownerName}/${repoName}/pulls/${pullRequestNumber}`, {
         state: 'close'
+    }).then(value => value).catch(reason => {
+        throw new Error(reason.message)
     });
 };
