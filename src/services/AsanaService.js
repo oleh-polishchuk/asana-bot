@@ -27,7 +27,6 @@ module.exports.getTaskDetails = (req, res) => {
     const matches = pullRequestBody.match(/https:\/\/app\.asana\.com\/\d\/(\d+)\/(\d+)\/f/);
     const projectId = matches && matches[ 1 ];
     const taskId = matches && matches[ 2 ];
-    const sectionId = process.env.ASANA_CODE_REVIEW_SECTION_ID;
 
-    return { projectId, taskId, sectionId };
+    return { projectId, taskId };
 };

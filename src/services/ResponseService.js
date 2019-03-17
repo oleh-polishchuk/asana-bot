@@ -27,4 +27,11 @@ module.exports.info = (res, message) => {
     })
 };
 
+module.exports.success = (res, data) => {
+    return res.status(200).json({
+        error: false,
+        data
+    })
+};
+
 
